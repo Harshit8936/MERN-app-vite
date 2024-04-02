@@ -9,6 +9,10 @@ import { Contact } from './pages/Contact';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { Error } from './pages/Error';
+import { Logout } from './pages/Logout';
+import { AdminLayout } from './components/layouts/Admin-layout';
+import { AdminUsers } from './pages/Admin-users';
+import { AdminContacts } from './pages/Admin-contacts';
 
 const App = () => {
   return (
@@ -22,7 +26,13 @@ const App = () => {
       <Route path='/login' element={<Login/>}/>
       <Route path='/register' element={<Register/>}/>
       <Route path='/contact' element={<Contact/>}/>
+      <Route path='/logout' element={<Logout/>}/>
       <Route path='*' element={<Error/>}/>
+      {/* Nested routes */}
+      <Route path='/admin' element={<AdminLayout />}>
+        <Route path='users' element={<AdminUsers />}/>
+        <Route path='contacts' element={<AdminContacts/>}/>
+      </Route>
     </Routes>
     <Footer />
     </BrowserRouter>

@@ -1,10 +1,17 @@
-import { useState } from "react"
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../store/auth";
+import { toast } from 'react-toastify';
+
+
 
 export const Login = ()=>{
     const [login,setLogin] = useState({
         email:"",
         password:""
     })
+    const navigate = useNavigate();
+    const {storeTokeninLS} = useAuth();
     const handleInput = (e)=>{
         let name = e.target.name;
         let value = e.target.value;
@@ -13,9 +20,28 @@ export const Login = ()=>{
             [name]:value
         })
     }
-    const handleLoginForm = (e)=>{
+    const handleLoginForm = async(e)=>{
         e.preventDefault();
-        console.log(login)
+        try {
+        const response = await fetch(`http://localhost:5000/api/auth/login`,{
+            method:"POST",
+            headers:{
+                "Content-type":"application/json"
+            },
+            body:JSON.stringify(login)
+        })
+        const res_data = await response.json();
+        if(response.ok){
+            storeTokeninLS(res_data.token);
+            setLogin({email:"",password:""})
+            toast.success(res_data.message ? res_data.message:"Login Success")
+            navigate("/");
+        }else{
+            toast.error(res_data.message ? res_data.message:"Invalid Creds")
+        }
+    } catch (error) {
+        toast.error(error)
+    }
     }
 
     return(

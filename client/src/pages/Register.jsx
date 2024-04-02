@@ -1,4 +1,7 @@
-import { useState } from "react"
+import { useState } from "react";
+import {useNavigate} from 'react-router-dom'
+import { useAuth } from "../store/auth";
+import { toast } from 'react-toastify';
 
 export const Register = ()=>{
     const [user,setUser] = useState({
@@ -7,6 +10,8 @@ export const Register = ()=>{
         password:"",
         phone:""
     });
+    const navigate = useNavigate();
+    const {storeTokeninLS} = useAuth();
     const handleInput = (e)=>{
         let name = e.target.name;
         let value = e.target.value;
@@ -15,9 +20,29 @@ export const Register = ()=>{
             [name]: value
         })
     }
-    const handleForm = (e)=>{
+    const handleForm = async (e)=>{
         e.preventDefault();
-       console.log(user)
+       try {
+       const response = await fetch(`http://localhost:5000/api/auth/register`,{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify(user)
+       })
+       const res_data = await response.json();
+    //    console.log("RESPONSE",res_data)
+       if(response.ok){
+            storeTokeninLS(res_data.token)
+            setUser({username:"",email:"",password:"",phone:""});
+            toast.success(res_data.message ? res_data.message:"Register Success");
+            navigate('/')
+       }else{
+        toast.error(res_data.message ? res_data.message:"Invalid Input")
+       }
+    } catch (error) {
+        toast.error(error)
+    }
     }
     return(
         <>
@@ -47,7 +72,7 @@ export const Register = ()=>{
                                     </div>
                                     <div>
                                         <label htmlFor="phone">Phone</label>
-                                        <input type="text" name="phone" id="phone" placeholder="Enter phone" autoComplete="off" required value={user.phone} onChange={handleInput}/>
+                                        <input type="number" name="phone" id="phone" placeholder="Enter phone" autoComplete="off" required value={user.phone} onChange={handleInput} maxLength="10"/>
                                     </div>
                                     <br />
                                     <button className="btn btn-submit" type="submit">Register</button>

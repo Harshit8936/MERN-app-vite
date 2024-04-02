@@ -1,15 +1,15 @@
-import { NavLink } from "react-router-dom"
+import { NavLink } from "react-router-dom";
+import { useAuth } from "../store/auth";
 
 export const About = () => {
+    const {user} = useAuth(); 
     return (
         <>
             <main>
                 <section className="section-hero">
                     <div className="container grid grid-two-cols">
                         <div className="hero-content">
-                            {/* <p>
-                    {user ? (<p>Welcome, {user.username}!</p>):(<p>Welcome, Guru Technical!</p>)}
-                </p> */}
+                        <p>Welcome, {user? user.username : `to our website !`}</p>
                             <h1>Why choose Us ?</h1>
                             <p>
                                 Expertise our team consist of experienced IT professional who are passionate about staying up-to-date with the latest industry trends.

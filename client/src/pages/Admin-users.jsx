@@ -17,7 +17,7 @@ export const AdminUsers = ()=>{
             if(response.ok){
                 const data = await response.json();
                 setAdmin(data.users);
-                console.log(admin)
+                // console.log(admin)
             }
         } catch (error) {
             console.log(error);
@@ -70,7 +70,7 @@ export const AdminUsers = ()=>{
                     <td>{value.username}</td>
                     <td>{value.email}</td>
                     <td>{value.phone}</td>
-                    <td><Link to={`/admin/users/${value._id}/edit`}>Edit</Link></td>
+                    <td><Link to={`/admin/edit/${value._id}`}>Edit</Link></td>
                     <td><button onClick={()=>{deleteUser(value._id)}}>Delete</button></td>
                 </tr>
                 })}

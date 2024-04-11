@@ -13,4 +13,19 @@ const allContacts = async(req,res,next)=>{
         }
 }
 
-module.exports = {allContacts}
+// delete contact by id
+const deleteContact = async(req,res,next)=>{
+    try {
+        const id = req.params.id;
+        const checkContact = await Contact.findById(id);
+        if(!checkContact){
+            return res.status(404).send({message:"Contact not found"});
+        }
+        const delContact = await Contact.findByIdAndDelete(id);
+        res.status(200).send({message:"Deleted !"})
+    } catch (error) {
+        next(error)
+    }
+}
+
+module.exports = {allContacts,deleteContact}

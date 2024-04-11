@@ -52,8 +52,8 @@ const updateUser = async(req,res,next)=>{
             if(!user){
                 return res.status(404).send({message:"No User Found"})
             }
-            const {username,email,phone} = req.body
-            const updatedUser = await User.updateOne({_id:id},{$set:{username,email,phone}});
+            const updatedData = req.body
+            const updatedUser = await User.updateOne({_id:id},{$set:updatedData});
             res.status(200).send({message:"User Updated",updatedUser:updatedUser})
         } catch (error) {
             next(error)

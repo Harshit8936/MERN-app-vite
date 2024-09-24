@@ -14,7 +14,7 @@ export const AuthProvider = ({children}) =>{
     }
 
     let isLoggedIn = !! token;
-    // console.log(isLoggedIn)
+    // console.log(isLoggedIn)  !! if true then true and if false then false
     // tackling the logout functionality
     const LogoutUser = ()=>{
         setToken("");

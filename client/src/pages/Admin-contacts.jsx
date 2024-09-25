@@ -4,11 +4,12 @@ import { toast } from 'react-toastify';
 
 
 export const AdminContacts = ()=>{
+    const Base_URL = import.meta.env.VITE_FRONTEND_BASE_URL;
     const {authToken} = useAuth();
     const[contact,setContact] = useState([]);
     const allContacts = async()=>{
                 try {
-                    const response = await fetch(`http://localhost:5000/api/admin/contacts`,{
+                    const response = await fetch(`${Base_URL}/api/admin/contacts`,{
                         method:'GET',
                         headers:{
                             'Authorization':authToken
@@ -28,7 +29,7 @@ export const AdminContacts = ()=>{
     }
     const handleContact = async(id)=>{
         try {
-            const response = await fetch(`http://localhost:5000/api/admin/contacts/delete/${id}`,{
+            const response = await fetch(`${Base_URL}/api/admin/contacts/delete/${id}`,{
                 method:'DELETE',
                 headers:{
                     'Authorization':authToken

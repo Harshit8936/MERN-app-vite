@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useAuth } from "../store/auth"
 
 export const Contact = () => {
+    const Base_URL = import.meta.env.VITE_FRONTEND_BASE_URL;
     const [contact, setContact] = useState({
         username: "",
         email: "",
@@ -29,7 +30,7 @@ export const Contact = () => {
         e.preventDefault();
         console.log(contact)
         try {
-            const response = await fetch(`http://localhost:5000/api/contact`,{
+            const response = await fetch(`${Base_URL}/api/contact`,{
                 method:"POST",
                 headers:{
                     "Content-Type":"application/json"

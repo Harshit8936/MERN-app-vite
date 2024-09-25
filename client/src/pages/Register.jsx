@@ -4,6 +4,7 @@ import { useAuth } from "../store/auth";
 import { toast } from 'react-toastify';
 
 export const Register = ()=>{
+    const Base_URL = import.meta.env.VITE_FRONTEND_BASE_URL;
     const [user,setUser] = useState({
         username:"",
         email:"",
@@ -23,7 +24,7 @@ export const Register = ()=>{
     const handleForm = async (e)=>{
         e.preventDefault();
        try {
-       const response = await fetch(`http://localhost:5000/api/auth/register`,{
+       const response = await fetch(`${Base_URL}/api/auth/register`,{
         method:"POST",
         headers:{
             "Content-Type":"application/json"

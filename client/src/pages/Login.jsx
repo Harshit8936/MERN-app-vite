@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 
 
 export const Login = ()=>{
+    const Base_URL = import.meta.env.VITE_FRONTEND_BASE_URL;
     const [login,setLogin] = useState({
         email:"",
         password:""
@@ -23,7 +24,7 @@ export const Login = ()=>{
     const handleLoginForm = async(e)=>{
         e.preventDefault();
         try {
-        const response = await fetch(`http://localhost:5000/api/auth/login`,{
+        const response = await fetch(`${Base_URL}/api/auth/login`,{
             method:"POST",
             headers:{
                 "Content-type":"application/json"

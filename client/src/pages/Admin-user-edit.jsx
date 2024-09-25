@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 
 export const AdminEditUser = ()=>{
+    const Base_URL = import.meta.env.VITE_FRONTEND_BASE_URL;
     const {id} = useParams(); 
     const[update,setUpdate] = useState({
         username:"",email:"",phone:""
@@ -13,7 +14,7 @@ export const AdminEditUser = ()=>{
     const {authToken} = useAuth();
     const getUser = async()=>{
        try {
-            const response = await fetch(`http://localhost:5000/api/admin/user/edit/${id}`,{
+            const response = await fetch(`${Base_URL}/api/admin/user/edit/${id}`,{
                 method:'GET',
                 headers:{
                     'Authorization':authToken
@@ -44,7 +45,7 @@ export const AdminEditUser = ()=>{
         console.log("calling update API");
         console.log(update);
         try {
-            const response = await fetch(`http://localhost:5000/api/admin/user/update?id=${id}`,{
+            const response = await fetch(`${Base_URL}/api/admin/user/update?id=${id}`,{
                 method:'PATCH',
                 headers:{
                     "Content-type":"application/json",

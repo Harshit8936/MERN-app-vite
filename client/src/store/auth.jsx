@@ -3,6 +3,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({children}) =>{
+    const Base_URL = import.meta.env.VITE_FRONTEND_BASE_URL;
     const [token,setToken] = useState(localStorage.getItem('token'));
     const [user,setUser] = useState("");
     const [isLoading,setIsLoading] = useState(true);
@@ -26,7 +27,7 @@ export const AuthProvider = ({children}) =>{
     const userAuthentication = async()=>{
         try {
             setIsLoading(true);
-            const response = await fetch(`http://localhost:5000/api/auth/loggeduser`,{
+            const response = await fetch(`${Base_URL}/api/auth/loggeduser`,{
                 method:"GET",
                 headers:{
                     Authorization:authToken
@@ -47,7 +48,7 @@ export const AuthProvider = ({children}) =>{
     // to fetch all services
     const getServices = async()=>{
         try {
-            const response = await fetch(`http://localhost:5000/api/servicedata/services`,{
+            const response = await fetch(`${Base_URL}/api/servicedata/services`,{
                 method:"GET",
             });
             if(response.ok){
